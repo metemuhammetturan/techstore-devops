@@ -37,6 +37,7 @@ pipeline {
             steps {
                 sh '''
                     . venv/bin/activate
+                    export PYTHONPATH=.
                     pytest tests/test_app.py \
                         -v \
                         --tb=short \
@@ -167,6 +168,7 @@ pipeline {
             steps {
                 sh '''
                     . venv/bin/activate
+                    export PYTHONPATH=.
                     pytest tests/test_ui.py -v --tb=short || true
                 '''
             }
