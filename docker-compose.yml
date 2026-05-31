@@ -6,7 +6,7 @@ services:
     build: .
     container_name: techstore-app
     ports:
-      - "5000:5000"
+      - "5001:5000"
     environment:
       - FLASK_ENV=production
     restart: unless-stopped
