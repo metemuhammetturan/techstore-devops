@@ -145,14 +145,14 @@ pipeline {
             steps {
                 sh '''
                     # /health endpoint kontrol
-                    STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5001/health)
+                    STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://host.docker.internal:5001/health)
                     if [ "$STATUS" != "200" ]; then
                         echo "❌ Smoke test başarısız! HTTP: $STATUS"
                         exit 1
                     fi
 
                     # Ana sayfa kontrol
-                    STATUS2=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5001/)
+                    STATUS2=$(curl -s -o /dev/null -w "%{http_code}" http://host.docker.internal:5001/)
                     if [ "$STATUS2" != "200" ]; then
                         echo "❌ Ana sayfa erişilemiyor! HTTP: $STATUS2"
                         exit 1
@@ -169,6 +169,7 @@ pipeline {
                 sh '''
                     . venv/bin/activate
                     export PYTHONPATH=.
+                    export BASE_URL=http://host.docker.internal:5001
                     pytest tests/test_ui.py -v --tb=short || true
                 '''
             }
