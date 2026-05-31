@@ -131,7 +131,7 @@ pipeline {
                     docker run -d \
                         --name techstore-app \
                         --restart unless-stopped \
-                        -p 5000:5000 \
+                        -p 5001:5000 \
                         ${DOCKER_HUB_USER}/${DOCKER_IMAGE}:latest
 
                     echo "⏳ Sağlık kontrolü bekleniyor..."
@@ -145,14 +145,14 @@ pipeline {
             steps {
                 sh '''
                     # /health endpoint kontrol
-                    STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5000/health)
+                    STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5001/health)
                     if [ "$STATUS" != "200" ]; then
                         echo "❌ Smoke test başarısız! HTTP: $STATUS"
                         exit 1
                     fi
 
                     # Ana sayfa kontrol
-                    STATUS2=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5000/)
+                    STATUS2=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5001/)
                     if [ "$STATUS2" != "200" ]; then
                         echo "❌ Ana sayfa erişilemiyor! HTTP: $STATUS2"
                         exit 1

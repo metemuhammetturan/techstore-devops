@@ -16,7 +16,8 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-BASE_URL = 'http://localhost:5000'
+import os
+BASE_URL = os.environ.get('BASE_URL', 'http://localhost:5001')
 
 
 @pytest.fixture(scope='module')
